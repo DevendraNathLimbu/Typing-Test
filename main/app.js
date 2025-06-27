@@ -12,31 +12,43 @@ const paragraphs = [
 ];
 
 const type = document.querySelector(".type p");
-const p = document.querySelector("p");
 const randomIndex = Math.floor(Math.random() * paragraphs.length);
 paragraphs[randomIndex].split("").forEach((char, index) => {
-     let span = `<span class="text-gray-500 text-xl">${char}</span>`;
+     let span = `<span class="text-gray-800 text-xl">${char}</span>`;
      type.innerHTML += span;
 });
 
 const input = document.querySelector("input");
 
-p.onclick = () => {
+type.onclick = () => {
     input.focus();
 }
 let charIndex = 0;
 
-input.oninput = () => {
-  const characters = type.querySelectorAll("span");
+const characters = type.querySelectorAll("span");
+  characters[charIndex].classList.add("mark");
+input.oninput = (e) => {
   let typedChar = input.value.split("")[charIndex];
     if(characters[charIndex].innerText === typedChar) {
       characters[charIndex].classList.add("text-green-500");
-      characters[charIndex].classList.remove("text-gray-500");
+      characters[charIndex+1].classList.add("mark");
+      characters[charIndex].classList.remove("mark");
+      characters[charIndex].classList.remove("text-gray-800");
+      charIndex++;
 
     }
-    else {
-      characters[charIndex].classList.add("text-red-500");
-      characters[charIndex].classList.remove("text-gray-500", "text-green-500");
+    else if(typedChar == null) {
+           charIndex--;
+           characters[charIndex+1].classList.remove("mark");
+           characters[charIndex].classList.add("mark");
+      characters[charIndex].classList.remove("text-red-500", "text-green-500");
     }
-  charIndex++;
+    else if(characters[charIndex].innerText != typedChar) {
+      characters[charIndex].classList.add("text-red-500");
+        characters[charIndex+1].classList.add("mark");
+      characters[charIndex].classList.remove("mark");
+      characters[charIndex].classList.remove("text-gray-800", "text-green-500");
+    charIndex++;
+    }
+console.log(charIndex);
 }

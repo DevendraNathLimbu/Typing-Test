@@ -5,19 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Typing Test</title>
       <link href="./output.css" rel="stylesheet">
+      <link rel="stylesheet" href="input.css">
 </head>
 <body>
     
     <main class="h-screen w-screen bg-lime-200 flex items-center justify-center font-sans font-semibold">
-        <div class=" min-h-200px w-3xl bg-sky-100 p-5 rounded-xl">
+        <div class="relative min-h-200px w-3xl bg-sky-100 p-5 rounded-xl">
             <input type="text"/>
         <div class="type">
             <p class="text-xl text-justify"></p>
         </div>
+        <footer class="flex justify-center border-2 p-5">
+        <h3 class="text-2xl text-blue-300 border-2">Time Left : <span></span></h3>
+        <button class="text-2xl border-2">Try Again!</button>
+    </footer>
     </div>
     
     </main>
-
     <script src="app.js"></script>
 </body>
 </html>
