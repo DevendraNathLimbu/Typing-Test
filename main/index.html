@@ -9,16 +9,17 @@
 </head>
 <body>
     
-    <main class="h-screen w-screen bg-lime-200 flex-col items-center justify-center font-sans font-semibold">
-        <div class="relative min-h-[200px] w-3xl bg-sky-100 p-5 rounded-xl">
-            <input type="text"/>
+    <main class="h-screen w-screen bg-lime-200 flex items-center justify-center font-sans font-semibold">
+        <div class="relative min-h-[200px] w-lg md:w-3xl bg-sky-100 p-5 rounded-xl">
+            <input class="opacity-0" type="text"/>
         <div class="type">
-            <p class="text-xl text-justify"></p>
+            <p class="text-[6px] md:text-xl text-justify"></p>
         </div>
 
-        <footer class=" p-2 flex justify-between items-center bg-sky-200 rounded-b-xl">
-        <h3 class="text-2xl dark:text-red-400">Time Left : <span></span></h3>
-        <button class="text-2xl rounded-2xl">Try Again!</button>
+        <footer class=" p-2 flex justify-around items-center mt-5">
+        <h3 class="text-lg md:text-2xl bg-lime-200 p-2 md:p-3 rounded-xl min-w-35">Time Left : <span class="text-gray-700"></span></h3>
+        <h4 class="text-lg md:text-2xl bg-red-400 rounded-lg p-2 md:p-3">Mistakes: <span>0</span></h4>
+        <button class="text-lg md:text-2xl rounded-2xl bg-green-600 p-2 md:p-3 font-bold text-white cursor-pointer">Try Again!</button>
     </footer>
 
     </div>

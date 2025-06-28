@@ -10,23 +10,30 @@ const paragraphs = [
       "Climate change is one of the most critical challenges facing our planet. Caused primarily by the increase in greenhouse gases such as carbon dioxide and methane, it leads to rising global temperatures, sea level rise, and more frequent extreme weather events. Human activities—especially burning fossil fuels, deforestation, and industrial agriculture—are major contributors. Climate change affects biodiversity, water resources, and food production, impacting both natural ecosystems and human societies. Addressing it requires global cooperation and swift action. Governments must enforce policies that reduce emissions, while individuals can make eco-conscious choices like using renewable energy, reducing waste, and supporting sustainable practices. Technological innovations like electric vehicles, carbon capture, and green infrastructure offer hope. But time is limited. Acting now is essential to prevent irreversible damage. The future of Earth depends on our collective efforts to protect and restore the planet’s delicate balance.",
       "Creative expression—through art, music, writing, and design—is a powerful force that connects people, cultures, and ideas. It allows individuals to convey thoughts, emotions, and experiences in ways that transcend language. Throughout history, creativity has shaped civilizations, sparked revolutions, and influenced generations. Whether it’s a painting that stirs emotion, a novel that inspires change, or a melody that brings comfort, creativity touches every part of human life. In today’s fast-paced digital world, creative skills are more important than ever. They foster innovation, critical thinking, and empathy. Creative work challenges norms and invites new perspectives. However, creativity also requires vulnerability and courage, as it often involves sharing something deeply personal. By nurturing creative habits, we open the door to deeper self-understanding and meaningful communication with others. Everyone has creative potential—it just needs to be discovered, practiced, and shared."
 ];
+  const type = document.querySelector(".type p");
+  let charIndex = 0;
+  const input = document.querySelector("input");
 
-const type = document.querySelector(".type p");
+
+function getRandomParagraph() {
+  input.value = ""; // Clear previous input
+type.innerHTML = ""; // Clear previous content
 const randomIndex = Math.floor(Math.random() * paragraphs.length);
 paragraphs[randomIndex].split("").forEach((char, index) => {
-     let span = `<span class="text-gray-800 text-xl">${char}</span>`;
+     let span = `<span class="text-gray-800 text-lg md:text-xl">${char}</span>`;
      type.innerHTML += span;
 });
-
-const input = document.querySelector("input");
 
 type.onclick = () => {
     input.focus();
 }
-let charIndex = 0;
+
+let countMistakes = 0;
+const mistakes = document.querySelector("footer h4 span");
 
 const characters = type.querySelectorAll("span");
   characters[charIndex].classList.add("mark");
+
 input.oninput = (e) => {
   let typedChar = input.value.split("")[charIndex];
     if(characters[charIndex].innerText === typedChar) {
@@ -39,6 +46,9 @@ input.oninput = (e) => {
     }
     else if(typedChar == null) {
            charIndex--;
+           if(characters[charIndex].classList.contains("text-red-500")) {
+           countMistakes--;
+          }
            characters[charIndex+1].classList.remove("mark");
            characters[charIndex].classList.add("mark");
       characters[charIndex].classList.remove("text-red-500", "text-green-500");
@@ -49,6 +59,49 @@ input.oninput = (e) => {
       characters[charIndex].classList.remove("mark");
       characters[charIndex].classList.remove("text-gray-800", "text-green-500");
     charIndex++;
+    countMistakes++;
     }
 console.log(charIndex);
+mistakes.innerText = countMistakes;
+}
+
+
+}
+
+getRandomParagraph();
+
+
+const button = document.querySelector("footer button");
+button.onclick = () => {
+  getRandomParagraph();
+  timer();
+  input.disabled = false;
+};
+
+const h3 = document.querySelector("h3");
+const time = document.querySelector("h3 span");
+let min = 2;
+let sec = 0;
+
+function timer(){
+     let id = setInterval(() => {
+    time.innerText = `${min}:${sec}`;
+      if(sec == 0 && min > 0){
+        min--;
+        sec = 60;
+      }
+      else if(min == 0 && sec == 0){
+        input.disabled = true;
+        clearInterval(id);
+        result();
+        min = 2;
+        sec = 1;
+      }
+      sec--;
+     },1000);
+}
+timer();
+
+function result() {
+  alert("Time's up! Please click the button to try again.");
 }
