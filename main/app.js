@@ -1,3 +1,4 @@
+alert("Welcome to the Typing Test! You have 2 minutes to type as many characters as you can. Good luck!");
 const paragraphs = [
     "Every morning, I wake up to the sound of birds singing. I stretch, yawn, and slowly get out of bed. My first task is to brush my teeth and wash my face. Then, I drink a glass of water to start my day. I often go for a short walk to breathe in the fresh air. The streets are quiet, and the sun rises slowly. It is a peaceful way to begin the day. When I return home, I make breakfast—usually toast, eggs, or cereal. After eating, I sit at my desk, ready to start my work. Having a simple and calm morning routine helps me stay focused and relaxed throughout the day. It gives me a good start and sets a positive tone. No matter how busy life gets, I try to keep this habit because it brings peace to my mind.",
     "Out of all four seasons, my favorite is spring. The cold of winter fades away, and the flowers begin to bloom. Trees start to grow green leaves again, and the air smells fresh and clean. I like how the days get longer, and the sun feels warm but not too hot. Birds return and sing in the trees. Spring is full of new life. People come outside more often, and the parks become busy with families, kids, and joggers. It’s a great time to go for walks, fly a kite, or just sit in the sun. I also enjoy spring showers. The sound of gentle rain on the roof is relaxing. Everything feels alive in spring, and it reminds me of a new beginning. It’s the best time to grow plants, learn something new, and enjoy nature’s beauty all around.",
@@ -13,7 +14,13 @@ const paragraphs = [
   const type = document.querySelector(".type p");
   let charIndex = 0;
   const input = document.querySelector("input");
+  const wpm = document.querySelector(".wordCount");
+  let words = 0;
 
+  let countMistakes = 0;
+const mistakes = document.querySelector("footer h4 span");
+
+//Generate a random paragraph and display it
 
 function getRandomParagraph() {
   input.value = ""; // Clear previous input
@@ -28,9 +35,7 @@ type.onclick = () => {
     input.focus();
 }
 
-let countMistakes = 0;
-const mistakes = document.querySelector("footer h4 span");
-
+//Add mark class and identify correct and incorrect characters
 const characters = type.querySelectorAll("span");
   characters[charIndex].classList.add("mark");
 
@@ -63,28 +68,43 @@ input.oninput = (e) => {
     }
 console.log(charIndex);
 mistakes.innerText = countMistakes;
-}
 
+  words = (charIndex + 1)/10;
+wpm.innerHTML = Math.round(words) + " WPM";
+
+//Try Again button functionality
+const button = document.querySelector("footer button");
+button.onclick = () => {
+  min = 2;
+  sec = 0;
+    characters[charIndex+1].classList.remove("mark");
+  charIndex = 0;
+  characters[charIndex].classList.add("mark");
+  getRandomParagraph();
+  clearInterval(id);
+  timer();
+  input.disabled = false;
+  countMistakes = 0;
+};
+
+
+}
 
 }
 
 getRandomParagraph();
-
-
-const button = document.querySelector("footer button");
-button.onclick = () => {
-  getRandomParagraph();
-  timer();
-  input.disabled = false;
-};
 
 const h3 = document.querySelector("h3");
 const time = document.querySelector("h3 span");
 let min = 2;
 let sec = 0;
 
+
+let id;
+
+// Timer function to count down from 2 minutes
 function timer(){
-     let id = setInterval(() => {
+     id = setInterval(() => {
     time.innerText = `${min}:${sec}`;
       if(sec == 0 && min > 0){
         min--;
